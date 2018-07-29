@@ -1,5 +1,8 @@
 RSpec.describe Sudoku::Cell do
-   specify '#deny_value' do
+
+  subject { described_class.new(nil, value_range: 0..9) }
+
+  specify '#deny_value' do
     subject.deny_value(1)
     subject.deny_value(3)
     subject.deny_value(5)

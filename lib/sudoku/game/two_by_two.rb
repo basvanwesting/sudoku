@@ -1,9 +1,13 @@
 class Sudoku::Game::TwoByTwo < Sudoku::Game
 
+  VALUE_RANGE = 1..2
+
   def report(io = $stdout)
     io.puts(
       rows.map do |row|
-        row.map(&:value).join('|')
+        row.
+          map { |cell| cell.value || " " }.
+          join('|')
       end.join("\n---\n")
     )
     io
@@ -13,7 +17,7 @@ class Sudoku::Game::TwoByTwo < Sudoku::Game
     def from_matrix(matrix_values)
       matrix_cells = matrix_values.map do |row_values|
         row_values.map do |value|
-          Sudoku::Cell.new(value)
+          Sudoku::Cell.new(value, value_range: VALUE_RANGE)
         end
       end
 
@@ -21,7 +25,7 @@ class Sudoku::Game::TwoByTwo < Sudoku::Game
         Sudoku::Row.new(row_cells)
       end
 
-      columns = matrix_cells[0].zip(matrix_cells[1..-1]).map do |column_cells|
+      columns = matrix_cells[0].zip(*matrix_cells[1..-1]).map do |column_cells|
         Sudoku::Column.new(column_cells)
       end
 
@@ -29,7 +33,6 @@ class Sudoku::Game::TwoByTwo < Sudoku::Game
         cells:   matrix_cells.flatten,
         rows:    rows,
         columns: columns,
-        areas:   [],
       )
     end
   end

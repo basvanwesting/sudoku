@@ -1,9 +1,10 @@
 class Sudoku::Cell
-  attr_accessor :value, :denied_values
+  attr_accessor :value, :denied_values, :value_range
 
-  def initialize(value = nil, denied_values: [])
-    self.value = value
+  def initialize(value = nil, value_range:, denied_values: [])
+    self.value         = value
     self.denied_values = denied_values
+    self.value_range   = value_range.to_a
   end
 
   def deny_value(value)
@@ -17,7 +18,7 @@ class Sudoku::Cell
 
   def allowed_values
     return [] if value.present?
-    (1..9) - denied_values
+    value_range - denied_values
   end
 
   def add_denied_values(new_denied_values)
