@@ -5,7 +5,7 @@ RSpec.describe Sudoku::Game::TwoByTwo do
       subject = described_class.from_matrix(
         [
           [1,2],
-          [3,4],
+          [3,nil],
         ]
       )
       subject.report(io)
@@ -13,7 +13,7 @@ RSpec.describe Sudoku::Game::TwoByTwo do
       expect(io.string).to eq <<~DOC
         1|2
         -+-
-        3|4
+        3|.
       DOC
     end
     specify 'all values empty' do
@@ -25,7 +25,11 @@ RSpec.describe Sudoku::Game::TwoByTwo do
       )
       subject.report(io)
 
-      expect(io.string).to eq ".|.\n-+-\n.|.\n"
+      expect(io.string).to eq <<~DOC
+        .|.
+        -+-
+        .|.
+      DOC
     end
     specify 'start normal' do
       subject = described_class.from_matrix(
@@ -36,7 +40,11 @@ RSpec.describe Sudoku::Game::TwoByTwo do
       )
       subject.report(io)
 
-      expect(io.string).to eq "1|.\n-+-\n.|.\n"
+      expect(io.string).to eq <<~DOC
+        1|.
+        -+-
+        .|.
+      DOC
     end
   end
 
@@ -55,13 +63,42 @@ RSpec.describe Sudoku::Game::TwoByTwo do
     end
   end
 
-  describe "#simple_solve" do
-    specify 'simple_solve all' do
-      subject = described_class.from_matrix(
+  describe ".from_matrix and from_heredoc" do
+    it 'is all the same result' do
+      sudoku_from_matrix = described_class.from_matrix(
         [
           [1,nil],
           [nil,nil],
         ]
+      )
+      sudoku_from_heredoc = described_class.from_heredoc(
+        <<~DOC
+          1|.
+          -+-
+          .|.
+        DOC
+      )
+      sudoku_from_sparse_heredoc = described_class.from_heredoc(
+        <<~DOC
+          1.
+          ..
+        DOC
+      )
+
+      expect(sudoku_from_matrix.cells.map(&:value)).to         eq [1,nil,nil,nil]
+      expect(sudoku_from_heredoc.cells.map(&:value)).to        eq [1,nil,nil,nil]
+      expect(sudoku_from_sparse_heredoc.cells.map(&:value)).to eq [1,nil,nil,nil]
+    end
+  end
+
+  describe "#simple_solve" do
+    specify 'simple_solve all' do
+      subject = described_class.from_heredoc(
+        <<~DOC
+          1|.
+          -+-
+          .|.
+        DOC
       )
       subject.simple_solve
       subject.report(io)

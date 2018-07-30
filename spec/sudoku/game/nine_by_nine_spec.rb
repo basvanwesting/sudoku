@@ -12,7 +12,7 @@ RSpec.describe Sudoku::Game::NineByNine do
           [6,7,8,9,1,2,3,4,5],
           [7,8,9,1,2,3,4,5,6],
           [8,9,1,2,3,4,5,6,7],
-          [9,1,2,3,4,5,6,7,8],
+          [9,1,2,3,4,5,6,7,nil],
         ]
       )
       subject.report(io)
@@ -28,25 +28,27 @@ RSpec.describe Sudoku::Game::NineByNine do
         ---+---+---
         789|123|456
         891|234|567
-        912|345|678
+        912|345|67.
       DOC
     end
   end
 
   describe "#simple_solve" do
     specify 'simple_solve all' do
-      subject = described_class.from_matrix(
-        [
-          [nil, nil, nil, nil, nil, 1,   8,   nil, 5],
-          [8,   nil, nil, nil, nil, 4,   nil, 9,   6],
-          [nil, nil, 6,   nil, nil, nil, nil, nil, 1],
-          [nil, nil, 8,   nil, nil, nil, nil, nil, nil],
-          [nil, 4,   3,   nil, 8,   nil, 9,   nil, nil],
-          [5,   nil, nil, nil, 9,   3,   nil, nil, nil],
-          [7,   nil, nil, 3,   nil, nil, 2,   1,   8],
-          [nil, nil, nil, 7,   1,   nil, nil, nil, nil],
-          [nil, 5,   nil, nil, 4,   nil, nil, nil, 7],
-        ]
+      subject = described_class.from_heredoc(
+        <<~DOC
+          ...|..1|8.5
+          8..|..4|.96
+          ..6|...|..1
+          ---+---+---
+          ..8|...|...
+          .43|.8.|9..
+          5..|.93|...
+          ---+---+---
+          7..|3..|218
+          ...|71.|...
+          .5.|.4.|..7
+        DOC
       )
       subject.simple_solve
       subject.report(io)

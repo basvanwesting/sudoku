@@ -92,5 +92,16 @@ class Sudoku::Game
         areas:   areas,
       )
     end
+
+    def from_heredoc(heredoc)
+      from_matrix(
+        heredoc.split("\n").map do |line|
+          line.
+            scan(/[\d\s\.]/).
+            map(&:to_i).
+            map { |v| v == 0 ? nil : v }
+        end.reject(&:empty?)
+      )
+    end
   end
 end

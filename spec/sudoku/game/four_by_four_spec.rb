@@ -7,7 +7,7 @@ RSpec.describe Sudoku::Game::FourByFour do
           [1,2,3,4],
           [5,6,7,8],
           [8,7,6,5],
-          [4,3,2,1],
+          [4,3,2,nil],
         ]
       )
       subject.report(io)
@@ -17,20 +17,21 @@ RSpec.describe Sudoku::Game::FourByFour do
         56|78
         --+--
         87|65
-        43|21
+        43|2.
       DOC
     end
   end
 
   describe "#simple_solve" do
     specify 'simple_solve all' do
-      subject = described_class.from_matrix(
-        [
-          [1,   nil, nil, nil],
-          [2,   nil, 1,   4],
-          [3,   1,   nil, 2],
-          [nil, nil, nil, 1],
-        ]
+      subject = described_class.from_heredoc(
+        <<~DOC
+          1.|..
+          2.|14
+          --+--
+          31|.2
+          ..|.1
+       DOC
       )
       subject.simple_solve
       subject.report(io)
