@@ -15,7 +15,12 @@ class Sudoku::Game
   end
 
   def solve
+    return if solved?
     solve_by_deny || solve_by_must
+  end
+
+  def solved?
+    cells.all? { |cell| !cell.value.nil? }
   end
 
   def solve_by_deny
@@ -27,16 +32,9 @@ class Sudoku::Game
   end
 
   def next_cell_for_solve_by_deny
-    initial_cell = cells.detect { |cell| cell.value.nil? }
-    return unless initial_cell
-    next_cell = cells.reject(&:value).inject(initial_cell) do |selected_cell, working_cell|
-      if working_cell.number_of_options < selected_cell.number_of_options
-        working_cell
-      else
-        selected_cell
-      end
+    cells.reject(&:value).detect do |cell|
+      cell.allowed_values.size == 1
     end
-    next_cell.allowed_values.size == 1 ? next_cell : nil
   end
 
   def solve_by_must
@@ -48,16 +46,9 @@ class Sudoku::Game
   end
 
   def next_cell_for_solve_by_must
-    initial_cell = cells.detect { |cell| cell.value.nil? }
-    return unless initial_cell
-    next_cell = cells.reject(&:value).inject(initial_cell) do |selected_cell, working_cell|
-      if working_cell.number_of_options < selected_cell.number_of_options
-        working_cell
-      else
-        selected_cell
-      end
+    cells.reject(&:value).detect do |cell|
+      cell.allowed_values.size == 1
     end
-    next_cell.allowed_values.size == 1 ? next_cell : nil
   end
 
   def report(io = $stdout)
