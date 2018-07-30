@@ -1,14 +1,11 @@
 class Sudoku::Game
   attr_accessor :cells, :rows, :columns, :areas
-  attr_accessor :rounds, :last_success_round
 
   def initialize(cells: [], rows: [], columns: [], areas: [])
     self.cells              = cells
     self.rows               = rows
     self.columns            = columns
     self.areas              = areas
-    self.rounds             = 0
-    self.last_success_round = 0
   end
 
   def update_cells
@@ -18,20 +15,14 @@ class Sudoku::Game
   end
 
   def solve
-    self.rounds = 0
-    self.last_success_round = 0
-    solve_by_deny
+    solve_by_deny || solve_by_must
   end
 
   def solve_by_deny
-    self.rounds += 1
     update_cells
     if next_cell = next_cell_for_solve_by_deny
-      self.last_success_round = rounds
       next_cell.value = next_cell.allowed_values.first
-      solve_by_deny
-    else
-      solve_by_must
+      solve
     end
   end
 
@@ -49,14 +40,10 @@ class Sudoku::Game
   end
 
   def solve_by_must
-    self.rounds += 1
     update_cells
     if next_cell = next_cell_for_solve_by_must
-      self.last_success_round = rounds
       next_cell.value = next_cell.allowed_values.first
-      solve_by_must
-    else
-      solve_by_deny if rounds - last_success_round < 10
+      solve
     end
   end
 
