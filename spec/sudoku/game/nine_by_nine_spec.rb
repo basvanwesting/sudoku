@@ -33,8 +33,8 @@ RSpec.describe Sudoku::Game::NineByNine do
     end
   end
 
-  describe "#simple_solve" do
-    specify 'simple_solve all' do
+  describe "#solve" do
+    specify 'solve all' do
       subject = described_class.from_heredoc(
         <<~DOC
           ...|..1|8.5
@@ -50,7 +50,7 @@ RSpec.describe Sudoku::Game::NineByNine do
           .5.|.4.|..7
         DOC
       )
-      subject.simple_solve
+      subject.solve
       subject.report(io)
 
       expect(io.string).to eq <<~DOC

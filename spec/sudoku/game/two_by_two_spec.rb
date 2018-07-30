@@ -48,7 +48,7 @@ RSpec.describe Sudoku::Game::TwoByTwo do
     end
   end
 
-  describe "#next_cell_for_simple_solve" do
+  describe "#next_cell_for_solve_by_deny" do
     specify 'first step' do
       subject = described_class.from_matrix(
         [
@@ -57,7 +57,7 @@ RSpec.describe Sudoku::Game::TwoByTwo do
         ]
       )
       subject.update_cells
-      cell = subject.next_cell_for_simple_solve
+      cell = subject.next_cell_for_solve_by_deny
       expect(cell.value).to eq nil
       expect(cell.denied_values).to match_array [1]
     end
@@ -91,8 +91,8 @@ RSpec.describe Sudoku::Game::TwoByTwo do
     end
   end
 
-  describe "#simple_solve" do
-    specify 'simple_solve all' do
+  describe "#solve" do
+    specify 'solve all' do
       subject = described_class.from_heredoc(
         <<~DOC
           1|.
@@ -100,7 +100,7 @@ RSpec.describe Sudoku::Game::TwoByTwo do
           .|.
         DOC
       )
-      subject.simple_solve
+      subject.solve
       subject.report(io)
 
       expect(io.string).to eq <<~DOC

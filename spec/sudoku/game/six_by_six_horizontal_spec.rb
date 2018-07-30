@@ -27,8 +27,8 @@ RSpec.describe Sudoku::Game::SixBySixHorizontal do
     end
   end
 
-  describe "#simple_solve" do
-    specify 'simple_solve all' do
+  describe "#solve" do
+    specify 'solve all' do
       subject = described_class.from_heredoc(
         <<~DOC
           ..6|..2
@@ -41,7 +41,7 @@ RSpec.describe Sudoku::Game::SixBySixHorizontal do
           1..|6..
         DOC
       )
-      subject.simple_solve
+      subject.solve
       subject.report(io)
 
       expect(io.string).to eq <<~DOC

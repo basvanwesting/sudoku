@@ -14,7 +14,21 @@ class Sudoku::Game
     areas.each(&:update_cells)
   end
 
-  def next_cell_for_simple_solve
+  def solve
+    solve_by_deny
+  end
+
+  def solve_by_deny
+    update_cells
+    while (new_cell = next_cell_for_solve_by_deny)
+      allowed_values = new_cell.allowed_values
+      break unless allowed_values.size == 1
+      new_cell.value = allowed_values.first
+      update_cells
+    end
+  end
+
+  def next_cell_for_solve_by_deny
     initial_cell = cells.detect { |cell| cell.value.nil? }
     return unless initial_cell
     cells.reject(&:value).inject(initial_cell) do |selected_cell, working_cell|
@@ -23,16 +37,6 @@ class Sudoku::Game
       else
         selected_cell
       end
-    end
-  end
-
-  def simple_solve
-    update_cells
-    while (new_cell = next_cell_for_simple_solve)
-      allowed_values = new_cell.allowed_values
-      break unless allowed_values.size == 1
-      new_cell.value = allowed_values.first
-      update_cells
     end
   end
 
