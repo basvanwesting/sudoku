@@ -25,7 +25,7 @@ RSpec.describe Sudoku::Game::TwoByTwo do
       )
       subject.report(io)
 
-      expect(io.string).to eq " | \n---\n | \n"
+      expect(io.string).to eq ".|.\n---\n.|.\n"
     end
     specify 'start normal' do
       subject = described_class.from_matrix(
@@ -36,11 +36,11 @@ RSpec.describe Sudoku::Game::TwoByTwo do
       )
       subject.report(io)
 
-      expect(io.string).to eq "1| \n---\n | \n"
+      expect(io.string).to eq "1|.\n---\n.|.\n"
     end
   end
 
-  describe "#next_cell" do
+  describe "#next_cell_for_simple_solve" do
     specify 'first step' do
       subject = described_class.from_matrix(
         [
@@ -49,7 +49,7 @@ RSpec.describe Sudoku::Game::TwoByTwo do
         ]
       )
       subject.update_cells
-      cell = subject.next_cell
+      cell = subject.next_cell_for_simple_solve
       expect(cell.value).to eq nil
       expect(cell.denied_values).to match_array [1]
     end
