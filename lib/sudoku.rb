@@ -10,6 +10,7 @@ require "sudoku/column"
 require "sudoku/area"
 require "sudoku/game"
 require "sudoku/game/two_by_two"
+require "sudoku/game/four_by_four"
 
 module Sudoku
   # Your code goes here...

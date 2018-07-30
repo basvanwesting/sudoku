@@ -26,7 +26,7 @@ class Sudoku::Game
     end
   end
 
-  def solve
+  def simple_solve
     update_cells
     while (new_cell = next_cell)
       allowed_values = new_cell.allowed_values

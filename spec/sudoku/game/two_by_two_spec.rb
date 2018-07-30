@@ -55,15 +55,15 @@ RSpec.describe Sudoku::Game::TwoByTwo do
     end
   end
 
-  describe "#solve" do
-    specify 'solve all' do
+  describe "#simple_solve" do
+    specify 'simple_solve all' do
       subject = described_class.from_matrix(
         [
           [1,nil],
           [nil,nil],
         ]
       )
-      subject.solve
+      subject.simple_solve
       subject.report(io)
 
       expect(io.string).to eq <<~DOC
