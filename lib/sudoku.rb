@@ -11,6 +11,7 @@ require "sudoku/area"
 require "sudoku/game"
 require "sudoku/game/two_by_two"
 require "sudoku/game/four_by_four"
+require "sudoku/game/nine_by_nine"
 
 module Sudoku
   # Your code goes here...

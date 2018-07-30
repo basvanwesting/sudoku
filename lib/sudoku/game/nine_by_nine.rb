@@ -1,8 +1,8 @@
-class Sudoku::Game::FourByFour < Sudoku::Game
+class Sudoku::Game::NineByNine < Sudoku::Game
 
-  VALUE_RANGE = 1..4
-  AREA_WIDTH = 2
-  AREA_HEIGHT = 2
+  VALUE_RANGE = 1..9
+  AREA_WIDTH = 3
+  AREA_HEIGHT = 3
 
   def report(io = $stdout)
     line_width = VALUE_RANGE.size + (VALUE_RANGE.size / AREA_WIDTH) - 1
