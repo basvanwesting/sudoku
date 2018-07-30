@@ -1,11 +1,14 @@
 class Sudoku::Game
   attr_accessor :cells, :rows, :columns, :areas
+  attr_accessor :rounds, :last_success_round
 
   def initialize(cells: [], rows: [], columns: [], areas: [])
-    self.cells   = cells
-    self.rows    = rows
-    self.columns = columns
-    self.areas   = areas
+    self.cells              = cells
+    self.rows               = rows
+    self.columns            = columns
+    self.areas              = areas
+    self.rounds             = 0
+    self.last_success_round = 0
   end
 
   def update_cells
@@ -15,18 +18,49 @@ class Sudoku::Game
   end
 
   def solve
+    self.rounds = 0
+    self.last_success_round = 0
     solve_by_deny
   end
 
   def solve_by_deny
+    self.rounds += 1
     update_cells
     if next_cell = next_cell_for_solve_by_deny
+      self.last_success_round = rounds
       next_cell.value = next_cell.allowed_values.first
       solve_by_deny
+    else
+      solve_by_must
     end
   end
 
   def next_cell_for_solve_by_deny
+    initial_cell = cells.detect { |cell| cell.value.nil? }
+    return unless initial_cell
+    next_cell = cells.reject(&:value).inject(initial_cell) do |selected_cell, working_cell|
+      if working_cell.number_of_options < selected_cell.number_of_options
+        working_cell
+      else
+        selected_cell
+      end
+    end
+    next_cell.allowed_values.size == 1 ? next_cell : nil
+  end
+
+  def solve_by_must
+    self.rounds += 1
+    update_cells
+    if next_cell = next_cell_for_solve_by_must
+      self.last_success_round = rounds
+      next_cell.value = next_cell.allowed_values.first
+      solve_by_must
+    else
+      solve_by_deny if rounds - last_success_round < 10
+    end
+  end
+
+  def next_cell_for_solve_by_must
     initial_cell = cells.detect { |cell| cell.value.nil? }
     return unless initial_cell
     next_cell = cells.reject(&:value).inject(initial_cell) do |selected_cell, working_cell|
