@@ -20,24 +20,23 @@ class Sudoku::Game
 
   def solve_by_deny
     update_cells
-    while (new_cell = next_cell_for_solve_by_deny)
-      allowed_values = new_cell.allowed_values
-      break unless allowed_values.size == 1
-      new_cell.value = allowed_values.first
-      update_cells
+    if next_cell = next_cell_for_solve_by_deny
+      next_cell.value = next_cell.allowed_values.first
+      solve_by_deny
     end
   end
 
   def next_cell_for_solve_by_deny
     initial_cell = cells.detect { |cell| cell.value.nil? }
     return unless initial_cell
-    cells.reject(&:value).inject(initial_cell) do |selected_cell, working_cell|
+    next_cell = cells.reject(&:value).inject(initial_cell) do |selected_cell, working_cell|
       if working_cell.number_of_options < selected_cell.number_of_options
         working_cell
       else
         selected_cell
       end
     end
+    next_cell.allowed_values.size == 1 ? next_cell : nil
   end
 
   def report(io = $stdout)
