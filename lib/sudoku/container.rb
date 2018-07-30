@@ -14,9 +14,6 @@ class Sudoku::Container
   end
 
   def each(&block)
-    #cells.each(&block)
-    cells.each do |cell|
-      block.call(cell)
-    end
+    cells.each(&block)
   end
 end

@@ -15,7 +15,7 @@ RSpec.describe Sudoku::Game::FourByFour do
       expect(io.string).to eq <<~DOC
         12|34
         56|78
-        -----
+        --+--
         87|65
         43|21
       DOC
@@ -38,7 +38,7 @@ RSpec.describe Sudoku::Game::FourByFour do
       expect(io.string).to eq <<~DOC
         14|23
         23|14
-        -----
+        --+--
         31|42
         42|31
       DOC

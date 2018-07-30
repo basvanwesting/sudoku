@@ -12,7 +12,7 @@ RSpec.describe Sudoku::Game::TwoByTwo do
 
       expect(io.string).to eq <<~DOC
         1|2
-        ---
+        -+-
         3|4
       DOC
     end
@@ -25,7 +25,7 @@ RSpec.describe Sudoku::Game::TwoByTwo do
       )
       subject.report(io)
 
-      expect(io.string).to eq ".|.\n---\n.|.\n"
+      expect(io.string).to eq ".|.\n-+-\n.|.\n"
     end
     specify 'start normal' do
       subject = described_class.from_matrix(
@@ -36,7 +36,7 @@ RSpec.describe Sudoku::Game::TwoByTwo do
       )
       subject.report(io)
 
-      expect(io.string).to eq "1|.\n---\n.|.\n"
+      expect(io.string).to eq "1|.\n-+-\n.|.\n"
     end
   end
 
@@ -68,7 +68,7 @@ RSpec.describe Sudoku::Game::TwoByTwo do
 
       expect(io.string).to eq <<~DOC
         1|2
-        ---
+        -+-
         2|1
       DOC
     end

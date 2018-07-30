@@ -37,22 +37,25 @@ class Sudoku::Game
   end
 
   def report(io = $stdout)
-    line_width = self.class::VALUE_RANGE.size + (self.class::VALUE_RANGE.size / self.class::AREA_WIDTH) - 1
+    areas_per_line = self.class::VALUE_RANGE.size / self.class::AREA_WIDTH
+    line_width = self.class::VALUE_RANGE.size + areas_per_line - 1
     rows.each_slice(self.class::AREA_HEIGHT) do |sub_rows|
       sub_rows.each do |cells|
         cells.each_slice(self.class::AREA_WIDTH) do |sub_cells|
           io.write sub_cells.map { |c| c.value || '.' }.join('')
           io.write '|'
         end
-        io.seek(io.pos - 1)
-        io.truncate(io.pos)
+        io.seek(io.pos - 1) && io.truncate(io.pos)
         io.puts
       end
-      io.write '-'*line_width
+      areas_per_line.times do
+        io.write '-' * self.class::AREA_WIDTH
+        io.write '+'
+      end
+      io.seek(io.pos - 1) && io.truncate(io.pos)
       io.puts
     end
-    io.seek(io.pos - line_width - 1)
-    io.truncate(io.pos)
+    io.seek(io.pos - line_width - 1) && io.truncate(io.pos)
     io
   end
 
