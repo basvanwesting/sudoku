@@ -7,9 +7,9 @@ class Sudoku::Container
   end
 
   def update_cells
-    denied_values = cells.map { |cell| cell.value }.compact
+    existing_values = cells.map { |cell| cell.value }.compact
     cells.each do |cell|
-      cell.add_denied_values(denied_values)
+      cell.add_denied_values(existing_values)
     end
   end
 

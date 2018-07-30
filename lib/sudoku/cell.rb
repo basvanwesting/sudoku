@@ -17,7 +17,7 @@ class Sudoku::Cell
   end
 
   def allowed_values
-    return [] if value.present?
+    return [value] if value.present?
     value_range - denied_values
   end
 
