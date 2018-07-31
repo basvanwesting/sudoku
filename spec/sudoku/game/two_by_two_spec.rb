@@ -1,5 +1,4 @@
 RSpec.describe Sudoku::Game::TwoByTwo do
-  let(:io) { StringIO.new }
   describe '#report' do
     specify 'all values filled' do
       subject = described_class.from_matrix(
@@ -8,9 +7,8 @@ RSpec.describe Sudoku::Game::TwoByTwo do
           [3,nil],
         ]
       )
-      subject.report(io)
 
-      expect(io.string).to eq <<~DOC
+      expect(subject.to_s).to eq <<~DOC
         1|2
         -+-
         3|.
@@ -23,9 +21,8 @@ RSpec.describe Sudoku::Game::TwoByTwo do
           [nil,nil],
         ]
       )
-      subject.report(io)
 
-      expect(io.string).to eq <<~DOC
+      expect(subject.to_s).to eq <<~DOC
         .|.
         -+-
         .|.
@@ -38,9 +35,8 @@ RSpec.describe Sudoku::Game::TwoByTwo do
           [nil,nil],
         ]
       )
-      subject.report(io)
 
-      expect(io.string).to eq <<~DOC
+      expect(subject.to_s).to eq <<~DOC
         1|.
         -+-
         .|.
@@ -86,9 +82,8 @@ RSpec.describe Sudoku::Game::TwoByTwo do
         DOC
       )
       subject.solve
-      subject.report(io)
 
-      expect(io.string).to eq <<~DOC
+      expect(subject.to_s).to eq <<~DOC
         1|2
         -+-
         2|1

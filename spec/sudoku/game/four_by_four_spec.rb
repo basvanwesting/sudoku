@@ -1,5 +1,4 @@
 RSpec.describe Sudoku::Game::FourByFour do
-  let(:io) { StringIO.new }
   describe '#report' do
     specify 'all values filled' do
       subject = described_class.from_matrix(
@@ -10,9 +9,8 @@ RSpec.describe Sudoku::Game::FourByFour do
           [4,3,2,nil],
         ]
       )
-      subject.report(io)
 
-      expect(io.string).to eq <<~DOC
+      expect(subject.to_s).to eq <<~DOC
         12|34
         56|78
         --+--
@@ -34,9 +32,8 @@ RSpec.describe Sudoku::Game::FourByFour do
        DOC
       )
       subject.solve
-      subject.report(io)
 
-      expect(io.string).to eq <<~DOC
+      expect(subject.to_s).to eq <<~DOC
         14|23
         23|14
         --+--

@@ -17,6 +17,7 @@ require "sudoku/solve_step"
 require "sudoku/solve_step/using_open_single"
 require "sudoku/solve_step/using_hidden_single"
 require "sudoku/solve"
+require "sudoku/display"
 
 module Sudoku
   # Your code goes here...

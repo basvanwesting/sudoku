@@ -1,5 +1,4 @@
 RSpec.describe Sudoku::SolveStep::UsingOpenSingle do
-  let(:io) { StringIO.new }
   let(:sudoku) do
     Sudoku::Game::FourByFour.from_heredoc(
       <<~DOC
@@ -19,8 +18,7 @@ RSpec.describe Sudoku::SolveStep::UsingOpenSingle do
       expect(subject.cell.denied_values).to match_array [1,2,4]
       expect(subject.value).to eq 3
 
-      sudoku.report(io)
-      expect(io.string).to eq <<~DOC
+      expect(sudoku.to_s).to eq <<~DOC
         1.|..
         2.|14
         --+--
@@ -29,10 +27,8 @@ RSpec.describe Sudoku::SolveStep::UsingOpenSingle do
       DOC
 
       subject.apply
-      io.rewind
-      sudoku.report(io)
 
-      expect(io.string).to eq <<~DOC
+      expect(sudoku.to_s).to eq <<~DOC
         1.|.3
         2.|14
         --+--
