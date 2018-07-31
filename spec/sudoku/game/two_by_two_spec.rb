@@ -48,21 +48,6 @@ RSpec.describe Sudoku::Game::TwoByTwo do
     end
   end
 
-  describe "#next_cell_for_solve_by_deny" do
-    specify 'first step' do
-      subject = described_class.from_matrix(
-        [
-          [1,nil],
-          [nil,nil],
-        ]
-      )
-      subject.update_cells
-      cell, value = subject.next_cell_for_solve_by_deny
-      expect(cell.value).to eq nil
-      expect(cell.denied_values).to match_array [1]
-    end
-  end
-
   describe ".from_matrix and from_heredoc" do
     it 'is all the same result' do
       sudoku_from_matrix = described_class.from_matrix(

@@ -13,6 +13,10 @@ require "sudoku/game/two_by_two"
 require "sudoku/game/four_by_four"
 require "sudoku/game/six_by_six_horizontal"
 require "sudoku/game/nine_by_nine"
+require "sudoku/solve_step"
+require "sudoku/solve_step/using_open_single"
+require "sudoku/solve_step/using_hidden_single"
+require "sudoku/solve"
 
 module Sudoku
   # Your code goes here...

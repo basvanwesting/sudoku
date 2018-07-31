@@ -8,62 +8,24 @@ class Sudoku::Game
     self.areas              = areas
   end
 
-  def update_cells
-    rows.each(&:update_cells)
-    columns.each(&:update_cells)
-    areas.each(&:update_cells)
+  def solve
+    Sudoku::Solve.new(self).call
   end
 
-  def solve
-    return if solved?
-    update_cells
-    solve_by_deny || solve_by_must
+  def containers
+    [
+      rows,
+      columns,
+      areas,
+    ].flatten
+  end
+
+  def unsolved_cells
+    cells.reject(&:value)
   end
 
   def solved?
     cells.all? { |cell| !cell.value.nil? }
-  end
-
-  def solve_by_deny
-    cell, value = next_cell_for_solve_by_deny
-    if cell && value
-      cell.value = value
-      solve
-    end
-  end
-
-  def next_cell_for_solve_by_deny
-    cells.reject(&:value).each do |cell|
-      if cell.allowed_values.size == 1
-        return [cell, cell.allowed_values.first]
-      end
-    end
-    nil
-  end
-
-  def solve_by_must
-    cell, value = next_cell_for_solve_by_must
-    if cell && value
-      cell.value = value
-      solve
-    end
-  end
-
-  def next_cell_for_solve_by_must
-    (rows + columns + areas).each do |container|
-      hash = Hash.new { |h,k| h[k] = [] }
-      container.cells.reject(&:value).each do |cell|
-        cell.allowed_values.each do |allowed_value|
-          hash[allowed_value] << cell
-        end
-      end
-      hash.each do |value, cells|
-        if cells.size == 1
-          return [cells.first, value]
-        end
-      end
-    end
-    nil
   end
 
   def report(io = $stdout)
