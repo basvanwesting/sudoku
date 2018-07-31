@@ -18,7 +18,7 @@ class Sudoku::SolveStep::UsingOpenSingle < Sudoku::SolveStep
   def update_cells_for_container(container)
     existing_values = container.cells.map { |cell| cell.value }.compact
     container.cells.each do |cell|
-      cell.add_denied_values(existing_values)
+      cell.deny_values(existing_values)
     end
   end
 end

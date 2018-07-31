@@ -21,9 +21,9 @@ class Sudoku::Cell
     value_range - denied_values
   end
 
-  def add_denied_values(new_denied_values)
-    new_denied_values.each do |new_denied_value|
-      deny_value(new_denied_value)
+  def deny_values(values)
+    values.each do |value|
+      deny_value(value)
     end
   end
 

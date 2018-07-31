@@ -16,6 +16,7 @@ require "sudoku/game/nine_by_nine"
 require "sudoku/solve_step"
 require "sudoku/solve_step/using_open_single"
 require "sudoku/solve_step/using_hidden_single"
+require "sudoku/solve_step/using_open_double"
 require "sudoku/solve"
 require "sudoku/display"
 

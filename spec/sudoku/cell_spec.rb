@@ -11,11 +11,11 @@ RSpec.describe Sudoku::Cell do
     expect(subject.denied_values).to match_array [1,3,5]
   end
 
-  specify '#add_denied_values' do
+  specify '#deny_values' do
     subject.deny_value(1)
     subject.deny_value(3)
     subject.deny_value(5)
-    subject.add_denied_values([3,4,5,7])
+    subject.deny_values([3,4,5,7])
     expect(subject.denied_values).to match_array [1,3,4, 5,7]
   end
 end

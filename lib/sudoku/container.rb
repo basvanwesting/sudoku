@@ -9,4 +9,9 @@ class Sudoku::Container
   def each(&block)
     cells.each(&block)
   end
+
+  def unsolved_cells
+    cells.reject(&:value)
+  end
+
 end
