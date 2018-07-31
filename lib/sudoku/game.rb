@@ -25,21 +25,26 @@ class Sudoku::Game
   end
 
   def solve_by_deny
-    if next_cell = next_cell_for_solve_by_deny
-      next_cell.value = next_cell.allowed_values.first
+    cell, value = next_cell_for_solve_by_deny
+    if cell && value
+      cell.value = value
       solve
     end
   end
 
   def next_cell_for_solve_by_deny
-    cells.reject(&:value).detect do |cell|
-      cell.allowed_values.size == 1
+    cells.reject(&:value).each do |cell|
+      if cell.allowed_values.size == 1
+        return [cell, cell.allowed_values.first]
+      end
     end
+    nil
   end
 
   def solve_by_must
-    if (pair = next_cell_for_solve_by_must)
-      pair.first.value = pair.last
+    cell, value = next_cell_for_solve_by_must
+    if cell && value
+      cell.value = value
       solve
     end
   end

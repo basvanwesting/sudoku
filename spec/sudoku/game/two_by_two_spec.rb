@@ -57,7 +57,7 @@ RSpec.describe Sudoku::Game::TwoByTwo do
         ]
       )
       subject.update_cells
-      cell = subject.next_cell_for_solve_by_deny
+      cell, value = subject.next_cell_for_solve_by_deny
       expect(cell.value).to eq nil
       expect(cell.denied_values).to match_array [1]
     end
