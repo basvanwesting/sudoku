@@ -16,6 +16,7 @@ class Sudoku::Game
 
   def solve
     return if solved?
+    update_cells
     solve_by_deny || solve_by_must
   end
 
@@ -24,7 +25,6 @@ class Sudoku::Game
   end
 
   def solve_by_deny
-    update_cells
     if next_cell = next_cell_for_solve_by_deny
       next_cell.value = next_cell.allowed_values.first
       solve
@@ -38,17 +38,27 @@ class Sudoku::Game
   end
 
   def solve_by_must
-    update_cells
-    if next_cell = next_cell_for_solve_by_must
-      next_cell.value = next_cell.allowed_values.first
+    if (pair = next_cell_for_solve_by_must)
+      pair.first.value = pair.last
       solve
     end
   end
 
   def next_cell_for_solve_by_must
-    cells.reject(&:value).detect do |cell|
-      cell.allowed_values.size == 1
+    (rows + columns + areas).each do |container|
+      hash = Hash.new { |h,k| h[k] = [] }
+      container.cells.reject(&:value).each do |cell|
+        cell.allowed_values.each do |allowed_value|
+          hash[allowed_value] << cell
+        end
+      end
+      hash.each do |value, cells|
+        if cells.size == 1
+          return [cells.first, value]
+        end
+      end
     end
+    nil
   end
 
   def report(io = $stdout)
