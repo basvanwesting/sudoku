@@ -34,7 +34,7 @@ RSpec.describe Sudoku::Game::NineByNine do
   end
 
   describe "#solve" do
-    specify 'solve all' do
+    specify 'solve 2 star' do
       subject = described_class.from_heredoc(
         <<~DOC
           ...|..1|8.5
@@ -65,6 +65,40 @@ RSpec.describe Sudoku::Game::NineByNine do
         764|359|218
         382|716|549
         159|842|637
+      DOC
+    end
+
+    specify 'solve 3 star' do
+      subject = described_class.from_heredoc(
+        <<~DOC
+          1..|2..|678
+          ...|.5.|...
+          .4.|..6|.5.
+          ---+---+---
+          ..1|4.3|.8.
+          ..8|.27|...
+          ...|1..|4..
+          ---+---+---
+          ..7|.1.|...
+          ...|.6.|891
+          ...|..4|7..
+        DOC
+      )
+      subject.solve
+      subject.report(io)
+
+      expect(io.string).to eq <<~DOC
+        1..|249|678
+        786|351|...
+        .4.|876|153
+        ---+---+---
+        ..1|493|.8.
+        4.8|627|.1.
+        ...|185|4..
+        ---+---+---
+        ..7|.18|...
+        ..4|762|891
+        81.|.34|7..
       DOC
     end
   end
