@@ -1,20 +1,18 @@
 RSpec.describe Sudoku::SolveStep::UsingHiddenSingle do
   let(:sudoku) do
-    Sudoku::Game::NineByNine.from_heredoc(
-      <<~DOC
-        ...|..1|8.5
-        8..|..4|.96
-        ..6|...|..1
-        ---+---+---
-        ..8|...|..3
-        .43|.8.|9.2
-        5..|.93|..4
-        ---+---+---
-        7..|3..|218
-        ...|71.|..9
-        .5.|.4.|..7
-      DOC
-    )
+    Sudoku::Game::NineByNine.from_heredoc <<~DOC
+      ...|..1|8.5
+      8..|..4|.96
+      ..6|...|..1
+      ---+---+---
+      ..8|...|..3
+      .43|.8.|9.2
+      5..|.93|..4
+      ---+---+---
+      7..|3..|218
+      ...|71.|..9
+      .5.|.4.|..7
+    DOC
   end
 
   describe "#next_step" do

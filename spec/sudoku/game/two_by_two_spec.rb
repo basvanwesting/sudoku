@@ -73,14 +73,14 @@ RSpec.describe Sudoku::Game::TwoByTwo do
   end
 
   describe "#solve" do
-    specify 'solve all' do
-      subject = described_class.from_heredoc(
-        <<~DOC
-          1|.
-          -+-
-          .|.
-        DOC
-      )
+    subject do
+      described_class.from_heredoc <<~DOC
+        1|.
+        -+-
+        .|.
+      DOC
+    end
+    it 'solves all cells' do
       subject.solve
 
       expect(subject.to_s).to eq <<~DOC

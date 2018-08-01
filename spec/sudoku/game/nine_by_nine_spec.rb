@@ -32,9 +32,9 @@ RSpec.describe Sudoku::Game::NineByNine do
   end
 
   describe "#solve" do
-    specify 'solve 2 star' do
-      subject = described_class.from_heredoc(
-        <<~DOC
+    context '2 star' do
+      subject do
+        described_class.from_heredoc <<~DOC
           ...|..1|8.5
           8..|..4|.96
           ..6|...|..1
@@ -47,27 +47,27 @@ RSpec.describe Sudoku::Game::NineByNine do
           ...|71.|...
           .5.|.4.|..7
         DOC
-      )
-      subject.solve
-
-      expect(subject.to_s).to eq <<~DOC
-        437|961|825
-        815|274|396
-        296|538|471
-        ---+---+---
-        978|425|163
-        643|187|952
-        521|693|784
-        ---+---+---
-        764|359|218
-        382|716|549
-        159|842|637
-      DOC
+      end
+      it 'solves all cells' do
+        subject.solve
+        expect(subject.to_s).to eq <<~DOC
+          437|961|825
+          815|274|396
+          296|538|471
+          ---+---+---
+          978|425|163
+          643|187|952
+          521|693|784
+          ---+---+---
+          764|359|218
+          382|716|549
+          159|842|637
+        DOC
+      end
     end
-
-    specify 'solve 3 star' do
-      subject = described_class.from_heredoc(
-        <<~DOC
+    context '3 star' do
+      subject do
+        described_class.from_heredoc <<~DOC
           1..|2..|678
           ...|.5.|...
           .4.|..6|.5.
@@ -80,22 +80,23 @@ RSpec.describe Sudoku::Game::NineByNine do
           ...|.6.|891
           ...|..4|7..
         DOC
-      )
-      subject.solve
-
-      expect(subject.to_s).to eq <<~DOC
-        135|249|678
-        786|351|942
-        942|876|153
-        ---+---+---
-        561|493|287
-        498|627|315
-        273|185|469
-        ---+---+---
-        627|918|534
-        354|762|891
-        819|534|726
-      DOC
+      end
+      it 'solves all cells' do
+        subject.solve
+        expect(subject.to_s).to eq <<~DOC
+          135|249|678
+          786|351|942
+          942|876|153
+          ---+---+---
+          561|493|287
+          498|627|315
+          273|185|469
+          ---+---+---
+          627|918|534
+          354|762|891
+          819|534|726
+        DOC
+      end
     end
   end
 end

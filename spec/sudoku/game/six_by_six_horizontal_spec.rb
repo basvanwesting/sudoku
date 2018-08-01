@@ -26,21 +26,20 @@ RSpec.describe Sudoku::Game::SixBySixHorizontal do
   end
 
   describe "#solve" do
-    specify 'solve all' do
-      subject = described_class.from_heredoc(
-        <<~DOC
-          ..6|..2
-          .2.|15.
-          ---+---
-          3..|...
-          ...|..3
-          ---+---
-          .64|.1.
-          1..|6..
-        DOC
-      )
+    subject do
+      described_class.from_heredoc <<~DOC
+        ..6|..2
+        .2.|15.
+        ---+---
+        3..|...
+        ...|..3
+        ---+---
+        .64|.1.
+        1..|6..
+      DOC
+    end
+    it 'solves all cells' do
       subject.solve
-
       expect(subject.to_s).to eq <<~DOC
         516|432
         423|156
