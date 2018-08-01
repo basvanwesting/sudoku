@@ -17,12 +17,12 @@ RSpec.describe Sudoku::SolveStep::UsingOpenDouble do
 
   describe "#next_step" do
     subject { described_class.new(sudoku) }
-    specify 'detemines cell & value, and applies' do
+    it 'detemines cell & value, and applies' do
       expect(Sudoku::SolveStep::UsingOpenSingle.new(sudoku).next_step).to be_falsy
       expect(Sudoku::SolveStep::UsingHiddenSingle.new(sudoku).next_step).to be_falsy
 
       expect(subject.call).to be_truthy
-      expect(subject.cell.denied_values).to match_array [1, 2, 3, 4, 5, 6, 7, 8]
+      expect(subject.cell.coordinates).to eq [4,1]
       expect(subject.value).to eq 9
 
       expect(sudoku.to_s).to eq <<~DOC

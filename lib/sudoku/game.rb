@@ -34,9 +34,14 @@ class Sudoku::Game
 
   class << self
     def from_matrix(matrix_values)
-      matrix_cells = matrix_values.map do |row_values|
-        row_values.map do |value|
-          Sudoku::Cell.new(value, value_range: self::VALUE_RANGE)
+      matrix_cells = matrix_values.map.with_index do |row_values, row_position|
+        row_values.map.with_index do |value, column_position|
+          Sudoku::Cell.new(
+            value,
+            value_range: self::VALUE_RANGE,
+            row_position: row_position,
+            column_position: column_position,
+          )
         end
       end
 
