@@ -7,10 +7,7 @@ class Sudoku::SolveStep
   end
 
   def call
-    if next_step
-      apply
-      Sudoku::Solve.new(sudoku).call
-    end
+    apply if next_step
   end
 
   def apply
