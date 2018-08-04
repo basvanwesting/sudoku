@@ -12,6 +12,7 @@ require "sudoku/game"
 require "sudoku/game/two_by_two"
 require "sudoku/game/four_by_four"
 require "sudoku/game/six_by_six_horizontal"
+require "sudoku/game/six_by_six_vertical"
 require "sudoku/game/nine_by_nine"
 require "sudoku/solve_step"
 require "sudoku/solve_step/using_open_single"
@@ -23,17 +24,17 @@ require "sudoku/display"
 module Sudoku
   if __FILE__ == $0
     sudoku = Sudoku::Game::NineByNine.from_heredoc <<~DOC
-      ...|.3.|2..
-      ..9|.4.|...
-      31.|2..|...
+      6..|...|287
+      .5.|.2.|.94
+      ...|8..|6.1
       ---+---+---
-      ...|3..|.5.
-      .5.|1..|..6
-      ...|...|.91
+      1.4|...|9.6
+      8.6|94.|.3.
+      .3.|762|..8
       ---+---+---
-      4..|...|6..
-      ..5|.84|...
-      926|..7|..4
+      2.7|39.|815
+      .85|.1.|.63
+      3..|...|...
     DOC
     sudoku.display_steps = true
     sudoku.solve
