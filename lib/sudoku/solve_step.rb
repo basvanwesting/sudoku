@@ -11,7 +11,7 @@ class Sudoku::SolveStep
   end
 
   def apply
-    self.cell.value = self.value
+    self.sudoku.make_step(self)
   end
 
   def next_step

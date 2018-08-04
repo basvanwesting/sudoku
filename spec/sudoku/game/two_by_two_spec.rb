@@ -88,6 +88,12 @@ RSpec.describe Sudoku::Game::TwoByTwo do
         -+-
         2|1
       DOC
+
+      expect(subject.steps.map { |s| [s.cell.coordinates, s.value ] }).to eq [
+        [[0, 1], 2],
+        [[1, 0], 2],
+        [[1, 1], 1],
+      ]
     end
   end
 end

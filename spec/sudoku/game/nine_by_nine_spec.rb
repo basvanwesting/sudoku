@@ -98,5 +98,38 @@ RSpec.describe Sudoku::Game::NineByNine do
         DOC
       end
     end
+    context '4 star' do
+      subject do
+        described_class.from_heredoc <<~DOC
+          ...|.3.|2..
+          ..9|.4.|...
+          31.|2..|...
+          ---+---+---
+          ...|3..|.5.
+          .5.|1..|..6
+          ...|...|.91
+          ---+---+---
+          4..|...|6..
+          ..5|.84|...
+          926|..7|..4
+        DOC
+      end
+      it 'solves all cells' do
+        subject.solve
+        expect(subject.to_s).to eq <<~DOC
+          547|831|269
+          269|745|183
+          318|296|547
+          ---+---+---
+          194|362|758
+          853|179|426
+          672|458|391
+          ---+---+---
+          481|923|675
+          735|684|912
+          926|517|834
+        DOC
+      end
+    end
   end
 end

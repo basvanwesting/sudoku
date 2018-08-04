@@ -1,15 +1,22 @@
 class Sudoku::Game
   attr_accessor :cells, :rows, :columns, :areas
+  attr_accessor :steps
 
   def initialize(cells: [], rows: [], columns: [], areas: [])
-    self.cells              = cells
-    self.rows               = rows
-    self.columns            = columns
-    self.areas              = areas
+    self.cells   = cells
+    self.rows    = rows
+    self.columns = columns
+    self.areas   = areas
+    self.steps   = []
   end
 
   def solve
     Sudoku::Solve.new(self).call
+  end
+
+  def make_step(step)
+    step.cell.value = step.value
+    self.steps << step
   end
 
   def to_s
