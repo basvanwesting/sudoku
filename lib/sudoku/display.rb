@@ -1,6 +1,8 @@
 class Sudoku::Display
   attr_accessor :sudoku
 
+  DEFAULT_REDRAW_DELAY = 0.3
+
   def initialize(sudoku)
     self.sudoku = sudoku
   end
@@ -9,6 +11,12 @@ class Sudoku::Display
     io = StringIO.new
     display_on_io(io)
     io.string
+  end
+
+  def redraw(delay: DEFAULT_REDRAW_DELAY)
+    system 'clear'
+    puts to_s
+    sleep delay
   end
 
   def display_on_io(io)

@@ -21,5 +21,22 @@ require "sudoku/solve"
 require "sudoku/display"
 
 module Sudoku
-  # Your code goes here...
+  if __FILE__ == $0
+    sudoku = Sudoku::Game::NineByNine.from_heredoc <<~DOC
+      ...|.3.|2..
+      ..9|.4.|...
+      31.|2..|...
+      ---+---+---
+      ...|3..|.5.
+      .5.|1..|..6
+      ...|...|.91
+      ---+---+---
+      4..|...|6..
+      ..5|.84|...
+      926|..7|..4
+    DOC
+    sudoku.display_steps = true
+    sudoku.solve
+  end
 end
+

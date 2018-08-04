@@ -1,13 +1,14 @@
 class Sudoku::Game
   attr_accessor :cells, :rows, :columns, :areas
-  attr_accessor :steps
+  attr_accessor :steps, :display_steps
 
-  def initialize(cells: [], rows: [], columns: [], areas: [])
+  def initialize(cells: [], rows: [], columns: [], areas: [], display_steps: false)
     self.cells   = cells
     self.rows    = rows
     self.columns = columns
     self.areas   = areas
     self.steps   = []
+    self.display_steps = display_steps
   end
 
   def solve
@@ -17,6 +18,8 @@ class Sudoku::Game
   def make_step(step)
     step.cell.value = step.value
     self.steps << step
+    Sudoku::Display.new(self).redraw if display_steps
+    step
   end
 
   def to_s
